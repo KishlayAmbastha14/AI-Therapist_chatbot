@@ -2,17 +2,15 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import google.generativeai as genai
+import os
 
-# ✅ Configure Gemini API
-genai.configure(api_key="AIzaSyBueTIb5BkI7gzONFbzbkVb20YTjBJ39r8")
+genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
-# ✅ Load the model
 model = genai.GenerativeModel("gemini-2.5-pro")
 
-# ✅ FastAPI app setup
+
 app = FastAPI()
 
-# ✅ Enable CORS (for frontend testing)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -20,7 +18,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# ✅ Request schema
+
 class ChatRequest(BaseModel):
     message: str
 
