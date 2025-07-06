@@ -1,52 +1,3 @@
-# from fastapi import FastAPI
-# from fastapi.middleware.cors import CORSMiddleware
-# from pydantic import BaseModel
-# import google.generativeai as genai
-# import os
-
-# genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
-
-# model = genai.GenerativeModel("gemini-2.5-pro")
-
-
-# app = FastAPI()
-
-# app.add_middleware(
-#     CORSMiddleware,
-#     allow_origins=["*"],
-#     allow_methods=["*"],
-#     allow_headers=["*"],
-# )
-
-
-# class ChatRequest(BaseModel):
-#     message: str
-
-# # ✅ Root test route
-# @app.get("/")
-# def read_root():
-#     return {"message": "✅ Gemini Health Assistant API is running."}
-
-# # ✅ Chat endpoint
-# @app.post("/chat")
-# def chat(request: ChatRequest):
-#     prompt = (
-#       "You are a kind, empathetic AI therapist. Respond to the user's concern using short (2–3 sentence), emotionally supportive, clear language. "
-#       "Avoid technical terms or medical advice. Focus on simple wellness suggestions like breathing, journaling, or mindfulness. "
-#       "Keep responses short, warm, and easy to understand.\n\n"
-#       f"User: {request.message}\n"
-#       "AI Therapist:"
-#     )
-#     try:
-#         response = model.generate_content(prompt)
-#         return {"reply": response.text}
-#     except Exception as e:
-#         return {"error": f"❌ Gemini API error: {str(e)}"}
-
-
-
-
-
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse, FileResponse
@@ -86,11 +37,14 @@ class ChatRequest(BaseModel):
 @app.post("/chat")
 def chat(request: ChatRequest):
     prompt = (
-        "You are a kind, empathetic AI therapist. Respond to the user's concern using short (2–3 sentence), emotionally supportive, clear language. "
-        "Avoid technical terms or medical advice. Focus on simple wellness suggestions like breathing, journaling, or mindfulness. "
-        "Keep responses short, warm, and easy to understand.\n\n"
+        "You are a professional, empathetic AI therapist helping users with their mental well-being. "
+        "You listen carefully, respond with compassion, and provide thoughtful, emotionally supportive replies. "
+        "Avoid giving any medical diagnoses or advice involving medication. "
+        "Instead, guide users with general mental wellness suggestions like breathing techniques, journaling, mindfulness, or seeking professional help when needed. "
+        "Always be supportive, non-judgmental, and understanding.\n\n"
         f"User: {request.message}\n"
-        "AI Therapist:"
+       "AI Therapist:"
+
     )
     try:
         response = model.generate_content(prompt)
